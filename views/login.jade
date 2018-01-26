@@ -1,0 +1,43 @@
+extends layout_login
+
+block content
+
+  style(type="text/css").
+    
+    #container_login{
+      margin:0 auto;
+    }
+
+  
+  script(type="text/javascript").
+  
+    $(document).ready(function(){
+
+      $('#frm_login').submit(function(e){
+        e.preventDefault();
+        
+        window.location.href = '/dashboard_control'
+
+      })
+      
+      
+    })  
+
+  
+  .container
+    div(class='col-xs-5' id='container_login_main')
+      div(class='panel panel-default' id='container_login')
+        .panel-heading
+          h3.panel-title.text-center Login
+        .panel-body
+          form(accept-charset='UTF-8', role='form' id='frm_login')
+            fieldset
+              .form-group
+                input.form-control(placeholder='Usuario', name='email', type='text')
+              .form-group
+                input.form-control(placeholder='Senha', name='password', type='password', value='')
+              .checkbox
+                label
+                  input(name='remember', type='checkbox', value='Lembre me')
+                  |  Lembre me
+              input.btn.btn-lg.btn-success.btn-block.btn-login(type='submit', value='Login')

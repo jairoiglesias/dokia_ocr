@@ -1,0 +1,47 @@
+doctype html
+html
+  head
+
+    title= title
+    //- link(rel='stylesheet', href='/stylesheets/style.css')
+    
+    script(src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous")
+
+    //- // Alertify
+    //- script(src='//cdn.jsdelivr.net/alertifyjs/1.8.0/alertify.min.js')
+    //- link(rel="stylesheet" href="//cdn.jsdelivr.net/alertifyjs/1.8.0/css/alertify.min.css")
+    
+    //- // bootstrap
+    link(rel="stylesheet" href="stylesheets/bootstrap/css/bootstrap.min.css")
+    
+    //- // table2csv
+    //- script(type="text/javascript" src="javascripts/table2csv.js")
+
+    //- // Full Page
+    //- script(type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.min.js")
+    //- link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.6.6/jquery.fullPage.css")
+
+    //- // Highcharts
+    //- script(src="https://code.highcharts.com/highcharts.js")
+    //- script(src="https://code.highcharts.com/modules/exporting.js")
+
+    //- // Custom CSS
+    //- link(rel='stylesheet' href='stylesheets/aceleradora.css')
+
+    //- // Materialize CSS
+    //- link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css')
+    //- script(type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js')
+    
+  body
+    div(id='app')
+      //- nav.navbar(style='background:#616eb9')
+      //-   .container-fluid
+      //-     .navbar-header
+      //-       a.navbar-brand(href='#')
+      //-         img(src='images/LOGO_agenda.png' width='35' height='30' style="float:left") 
+      //-         span(id='logo') Undefined Manager
+      //-     form.navbar-form.navbar-left
+      //-       .form-group
+      //-         input.form-control(type='text', placeholder='Faça a sua pesquisa aqui' id="text_search")
+      //-       button.btn.btn-default(type='submit' style='margin-left:20px') Pesquisar
+      block content

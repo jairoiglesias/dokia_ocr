@@ -1,0 +1,32 @@
+
+html, body {
+  height: 100%;
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*background: url('../images/start2.jpg');*/
+  background-size: 100% 100%;
+  background-position: center;
+  opacity: 1.2;
+}
+
+.btn-login {
+  color: #fff !important;
+  background-color: rgba(72, 118, 121, 0.37) !important;
+  border-color: #fff !important;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#container_login_main{
+  width:100%;
+}
+
+#container_login{
+  width:500px
+}
