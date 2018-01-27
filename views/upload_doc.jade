@@ -54,9 +54,12 @@ block content
     
   div(class='container')
     h2 Upload de documentos (Teste OCR Tesseract)
+    a(class='btn btn-info' href='get_all_files'  target='_blank') Listar Urls dos Textos
+    hr
     form(method="post" id="frm_upload_doc" enctype="multipart/form-data")
         input(class='form-control' type='file' name='file_doc' id='file_doc' accept=".jpg,.jpeg,.png,.tiff")
         br
         input(class='btn btn-success' type='submit' value='enviar' id='btn_enviar')
-        hr
-        pre(id='ocr_result')
+    hr
+    a(id='url_ocr_atual')
+    pre(id='ocr_result')
