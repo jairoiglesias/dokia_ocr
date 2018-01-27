@@ -3,13 +3,14 @@ module.exports = function(app) {
 
   var multer  = require('multer')
   var AWS = require('aws-sdk')
+  var fs = require('fs')
 
   var upload = multer({ dest: 'uploads/' })
 
   // Configura AWS S3
   var bucketName = 'dokia'
-  var AWSAccessKeyId = 'AKIAJ2BCWKEYHUU4HEDA'
-  var AWSSecretKey = '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'
+  var AWSAccessKeyId = 'AKIAJQEDL6PJ7PWTI5HA'
+  var AWSSecretKey = '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'
 
   // Valida a sessão no S3
   var s3 = new AWS.S3({
@@ -17,6 +18,26 @@ module.exports = function(app) {
     secretAccessKey: AWSSecretKey,
     region: 'sa-east-1'
   })
+
+  // Upload file usando o serviço do S3 da AWS
+  function uploadAWS_S3(s3, params, callback){
+
+    s3.putObject(params, function(err, data){
+
+      if(err){
+        console.log(err)
+        callback(err)
+      }
+      else{
+
+        console.log('Upload na Amazon S3 processado com sucesso!')
+        callback(data)
+
+      }
+        
+    })
+
+  }
 
   app.get('/', (req, res) => {
     res.send('Tesseract NodeJs Started !!!')
@@ -43,44 +64,58 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
 
+    console.log(req.files[0])
+
+    var originalname = req.files[0].originalname
+    var originalnameRaw = originalname.split('.')[0]
+
     var file = req.files[0].path
-    
-    var name = req.files[0].originalname
-    name = name.replace('jpg', 'txt').replace('jpeg', 'txt').replace('tiff', 'txt')
 
-    // console.log(req.files)
+    var newFileNameImage = './uploads/'+originalnameRaw+'/'+originalname
 
-    var ocr = require('./../ajax/test_tesseract.js')
+    var newFolderName = './uploads/'+originalnameRaw
 
-    ocr.extractSingleImage(file, function(result){
+    fs.mkdir(newFolderName, function(err){
+      if(err) throw err
 
-      /*
-        Inicia o processo de envio pro S3 da Amazon
-      */
-
-      // Configura o upload
-
-      var params = {
-          Bucket: bucketName,
-          Key: name,
-          Body: result
-      }
-
-      console.log('Iniciando upload no Amazon S3 ...')
+      console.log('dir created')
       
-      s3.putObject(params, function(err, data){
-
-        if(err) throw err;
-
-        console.log('Upload na Amazon S3 processado com sucesso!')
-
-        delete params.Body
-
-        res.send(result)
+      fs.rename(file, newFileNameImage, function (err) {
         
+        if (err) throw err;
+        
+        console.log('renamed complete');
+
+        var name = req.files[0].originalname
+        name = name.replace('jpg', 'txt').replace('jpeg', 'txt').replace('tiff', 'txt')
+
+        // console.log(req.files)
+
+        var ocr = require('./../ajax/test_tesseract.js')
+
+        console.log('Iniciando OCR Tesseract ...')
+
+        ocr.extractSingleImage(newFileNameImage, function(result){
+
+          console.log(result)
+
+          var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'.txt'
+
+          fs.writeFile(newFileNameText, result, function(err){
+
+            if(err) throw err
+
+            console.log('Upload na Amazon S3 processado com sucesso!')
+            res.send(result)
+
+          })
+          
+        })
+
       })
-      
+
     })
+    
     
   })
 
