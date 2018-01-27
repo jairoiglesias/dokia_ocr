@@ -34,7 +34,6 @@ block content
                     url: 'upload_doc',
                     type: 'POST',
                     data: formData,
-                    cache: false,
                     contentType: false,
                     enctype: 'multipart/form-data',
                     processData: false,
@@ -56,7 +55,7 @@ block content
   div(class='container')
     h2 Upload de documentos (Teste OCR Tesseract)
     form(method="post" id="frm_upload_doc" enctype="multipart/form-data")
-        input(class='form-control' type='file' name='file_doc' id='file_doc')
+        input(class='form-control' type='file' name='file_doc' id='file_doc' accept=".jpg,.jpeg,.png,.tiff")
         br
         input(class='btn btn-success' type='submit' value='enviar' id='btn_enviar')
         hr
