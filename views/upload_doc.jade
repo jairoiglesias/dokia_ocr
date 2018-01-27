@@ -9,10 +9,55 @@ block content
   
     $(document).ready(function(){
 
-      
+        $('#frm_upload_doc').submit(function(e){
+
+            e.preventDefault()
+
+            // Recupera os arquivos do input file
+            var file = $('#file_doc')[0].files[0]
+
+            if(file == undefined){
+                alertify.error('Selecione um arquivo JPEG/TIFF')
+            }
+            else{
+
+                alertify.success('Iniciando processamento OCR', 10)
+
+                // Monta um objeto FormData com os arquivos
+                var formData = new FormData();
+                formData.append('file_doc', file);
+
+                $('#ocr_result').text('Processando OCR ...')
+                
+                // Envia ajax para processar o upload
+                var promise = $.ajax({
+                    url: 'upload_doc',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
+                    processData: false,
+                })
+                
+                promise.then(function (response) {
+                        
+                    $('#ocr_result').text(response)
+
+                })
+
+            }
+
+        })
       
     })  
 
     
   div(class='container')
-    h2 Upload de documentos
+    h2 Upload de documentos (Teste OCR Tesseract)
+    form(method="post" id="frm_upload_doc" enctype="multipart/form-data")
+        input(class='form-control' type='file' name='file_doc' id='file_doc')
+        br
+        input(class='btn btn-success' type='submit' value='enviar' id='btn_enviar')
+        hr
+        pre(id='ocr_result')

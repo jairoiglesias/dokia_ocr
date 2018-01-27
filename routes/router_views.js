@@ -1,6 +1,9 @@
 
 module.exports = function(app) {
 
+  var multer  = require('multer')
+  var upload = multer({ dest: 'uploads/' })
+
   app.get('/', (req, res) => {
     res.send('Tesseract NodeJs Started !!!')
   })
@@ -21,6 +24,24 @@ module.exports = function(app) {
         res.send(result)
         
     })
+
+  })
+
+  app.post('/upload_doc', upload.any(), (req, res) => {
+
+    var file = req.files[0].path
+
+    // console.log(file)
+
+    var ocr = require('./../ajax/test_tesseract.js')
+
+    ocr.extractSingleImage(file, function(result){
+      
+      console.log(result)
+      res.send(result)
+      
+    })
+    
 
   })
 
