@@ -128,7 +128,13 @@ module.exports = function(app) {
           s3.getSignedUrl('getObject', urlParams, function(err, url){
             
             console.log('the url of the image is', url);
-            fileUrls.push(url)
+
+            var fileName = url.split('/')[3].split('?')[0]
+
+            fileUrls.push({
+              fileName: fileName,
+              url: url
+            })
             
             if(fileUrls.length == (bucketContents.length - 1)){
               res.send(fileUrls)
