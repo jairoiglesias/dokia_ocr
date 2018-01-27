@@ -9,6 +9,13 @@ module.exports = function(app) {
     res.render('upload_doc')
   })
 
+  app.get('/testa_tesseract', (req, res) => {
 
+    // var ocr = require('./../ajax/test_tesseract.js')
+
+    var tesseract = require('node-tesseract');
+    console.log(tesseract)
+
+  })
 
 }
