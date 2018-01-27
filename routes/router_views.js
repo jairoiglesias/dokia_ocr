@@ -11,10 +11,16 @@ module.exports = function(app) {
 
   app.get('/testa_tesseract', (req, res) => {
 
-    // var ocr = require('./../ajax/test_tesseract.js')
+    var ocr = require('./../ajax/test_tesseract.js')
 
-    var tesseract = require('node-tesseract');
-    console.log(tesseract)
+    var imageFullPath = 'public/images_ocr/avaliaca_judicial_02.tiff'
+    
+    ocr.extractSingleImage(imageFullPath, function(result){
+        
+        console.log(result)
+        res.send(result)
+        
+    })
 
   })
 

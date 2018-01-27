@@ -29,8 +29,6 @@ else if(arg == '--extract-all-files'){
 
 function extractSingleImage(imageFullPath, callback){
 
-    console.log(imageFullPath)
-
     tesseract.process(imageFullPath, function(err, text) {
         if(err) {
             console.error(err);
