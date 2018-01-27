@@ -17,10 +17,14 @@ function distLatLong(lat1,lon1,lat2,lon2) {
 
 module.exports = function(app) {
 
+  app.get('/', (req, res) => {
+    res.send('Tesseract NodeJs Started !!!')
+  })
+
   app.get('/upload_doc', (req, res) => {
     res.render('upload_doc')
   })
 
-  
+
 
 }
