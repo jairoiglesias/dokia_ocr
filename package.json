@@ -13,6 +13,7 @@
     "express": "~4.14.0",
     "express-load": "*",
     "express-session": "*",
+    "gm": "^1.23.1",
     "ip": "^1.1.5",
     "jade": "^1.11.0",
     "mongodb": "^3.0.1",
