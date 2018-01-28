@@ -64,6 +64,9 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
 
+    req.setTimeout(0)
+
+    console.log(res.body)
     console.log(req.files[0])
 
     var originalname = req.files[0].originalname
@@ -75,11 +78,17 @@ module.exports = function(app) {
 
     var newFolderName = './uploads/'+originalnameRaw
 
+    // Cria o diretorio para guardar o PDF
     fs.mkdir(newFolderName, function(err){
-      if(err) throw err
-
-      console.log('dir created')
       
+      if(err.code == 'EEXIST'){
+        console.log(err)
+      }
+      else{
+        console.log('dir created')
+      }
+      
+      // Renomeia o arquivo para o novo diretorio
       fs.rename(file, newFileNameImage, function (err) {
         
         if (err) throw err;
@@ -87,29 +96,66 @@ module.exports = function(app) {
         console.log('renamed complete');
 
         var name = req.files[0].originalname
-        name = name.replace('jpg', 'txt').replace('jpeg', 'txt').replace('tiff', 'txt')
+        name = name.replace('pdf', 'txt')
 
         // console.log(req.files)
+        
+        // ### Inicia o procedimento de conversão do PDF para formato de imagem ###
 
-        var ocr = require('./../ajax/test_tesseract.js')
+        var m_pdf2img = require('./../ajax/pdf2img.js')
 
-        console.log('Iniciando OCR Tesseract ...')
+        console.log('Iniciando a conversão do PDF para imagens')
 
-        ocr.extractSingleImage(newFileNameImage, function(result){
+        m_pdf2img.convertPdf2Img(newFileNameImage, function(result){
 
-          console.log(result)
+        
+          function processaOCRLote(result, index, callback){
 
-          var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'.txt'
+            // ### Inicia o procedimento de analise OCR ###
 
-          fs.writeFile(newFileNameText, result, function(err){
+            var ocr = require('./../ajax/test_tesseract.js')
 
-            if(err) throw err
+            // console.log(result.message[index])
+            
+            var imagePath = result.message[index].path
 
-            console.log('Upload na Amazon S3 processado com sucesso!')
-            res.send(result)
+            console.log('Iniciando OCR Tesseract da imagem ' + imagePath)
+
+            ocr.extractSingleImage(imagePath, function(ocrData){
+
+              console.log(ocrData)
+
+              var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'.txt'
+
+              fs.writeFile(newFileNameText, ocrData, function(err){
+
+                if(err) throw err
+
+                console.log('Extração de dados da imagem realizada com sucesso')
+                console.log(index)
+
+                if(index == (result.message.length - 1)){
+                  callback()
+                }
+                else{
+                  var newIndex = index + 1
+                  processaOCRLote(result, newIndex, callback)
+                }
+
+              })
+              
+            })
+
+
+          }
+
+          processaOCRLote(result, 0, function(){
+
+            console.log('Processamento de OCR finalizado')
+            res.send('Finalizado com sucesso')
 
           })
-          
+
         })
 
       })

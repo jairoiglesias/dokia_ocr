@@ -36,7 +36,7 @@ block content
                     data: formData,
                     contentType: false,
                     enctype: 'multipart/form-data',
-                    processData: false,
+                    processData: false
                 })
                 
                 promise.then(function (response) {
@@ -57,7 +57,8 @@ block content
     a(class='btn btn-info' href='get_all_files'  target='_blank') Listar Urls dos Textos
     hr
     form(method="post" id="frm_upload_doc" enctype="multipart/form-data")
-        input(class='form-control' type='file' name='file_doc' id='file_doc' accept=".jpg,.jpeg,.png,.tiff")
+        //- input(class='form-control' type='file' name='file_doc' id='file_doc' accept=".jpg,.jpeg,.png,.tiff")
+        input(class='form-control' type='file' name='file_doc' id='file_doc' accept=".pdf")
         br
         input(class='btn btn-success' type='submit' value='enviar' id='btn_enviar')
     hr
