@@ -66,7 +66,9 @@ module.exports = function(app) {
     
     req.connection.setTimeout(999999)
 
+    console.log('REQUEST ======================')
     console.log(res.body)
+    console.log('==============================')
     console.log(req.files[0])
 
     var originalname = req.files[0].originalname
