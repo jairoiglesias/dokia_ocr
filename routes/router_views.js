@@ -69,7 +69,8 @@ module.exports = function(app) {
     console.log('REQUEST ======================')
     console.log(res.body)
     console.log('==============================')
-    console.log(req.files[0])
+    console.log(req)
+    console.log(req.files)
 
     var originalname = req.files[0].originalname
     var originalnameRaw = originalname.split('.')[0]
