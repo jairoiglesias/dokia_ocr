@@ -139,45 +139,57 @@ module.exports = function(app) {
         console.log(data.Body.toString());
 
         res.send(data.Body.toString())
-      }     
+      
+    }
     
     })
 
   })
 
   app.get('/get_all_files', (req, res) => {
-    
-    var params = {
-        Bucket: bucketName
-    }
 
-    s3.listObjects(params, function(err, data){
-      var bucketContents = data.Contents;
+    var AllFiles = []
+    var files = fs.readdirSync('./uploads/')
 
-      var fileUrls = []
-        
-        for (var i = 0; i < bucketContents.length; i++){
+    var ip = require('ip').address()
 
-          var urlParams = {Bucket: 'dokia', Key: bucketContents[i].Key};
-          
-          s3.getSignedUrl('getObject', urlParams, function(err, url){
-            
-            console.log('the url of the image is', url);
+    console.log(files.length)
 
-            var fileName = url.split('/')[3].split('?')[0]
+    for(var i in files) {
+      
+      var subFiles = fs.readdirSync('./uploads/' + files[i])
 
-            fileUrls.push({
-              fileName: fileName,
-              url: url
-            })
-            
-            if(fileUrls.length == (bucketContents.length - 1)){
-              res.send(fileUrls)
-            }
-
-          })
+      for(var j in subFiles){
+        if(subFiles[j].indexOf('txt') != -1){
 
         }
+        AllFiles.push('http://' + ip + ':3001/uploads/' + files[i] + '/' + subFiles[j])
+      }
+
+    }
+
+    res.send(AllFiles)
+
+  })
+
+  app.get('/uploads/:dir/:file', (req, res) => {
+
+    var dir = req.params.dir
+    var file = req.params.file
+
+
+    // res.download(req.path)
+    console.log(req.path)
+    console.log(dir, file)
+
+  })
+
+  app.get('/test_pdf2pic', (req, res) => {
+
+    var m_pdf2pic = require('./../ajax/pdf2img.js')
+
+    m_pdf2pic.convertPdf2Img(function(result){
+      res.send(result)
     })
 
   })

@@ -1,0 +1,26 @@
+{
+  "version": 3,
+  "sources": [
+    "private.js"
+  ],
+  "names": [
+    "require",
+    "module",
+    "exports",
+    "properties",
+    "WeakMap",
+    "currentContext",
+    "context",
+    "has",
+    "set",
+    "JSON",
+    "stringify",
+    "get"
+  ],
+  "mappings": ";;AAAAA,QAAQ,gBAAR;AACA;;;;AAIAC,OAAOC,OAAP,GAAiB,YAAM;AACtB,QAAIC,aAAa,IAAIC,OAAJ,EAAjB;AACA,QAAIC,iBAAiB,EAArB;;AAEG,WAAO,UAACC,OAAD,EAAa;;AAEhB,YAAI,CAACH,WAAWI,GAAX,CAAeD,OAAf,CAAL,EAA8B;AAC1BH,uBAAWK,GAAX,CAAeF,OAAf,EAAwB,EAAxB;AACAD,2BAAeC,OAAf,IAA0BG,KAAKC,SAAL,CAAeJ,OAAf,CAA1B;AACH;;AAED,YAAGG,KAAKC,SAAL,CAAeJ,OAAf,KAA2BD,eAAeC,OAAf,CAA9B,EAAuD;AACtD,mBAAO,EAAP;AACA;;AAED,eAAOH,WAAWQ,GAAX,CAAeL,OAAf,CAAP;AACH,KAZD;AAaH,CAjBD",
+  "file": "private.js",
+  "sourceRoot": "../src",
+  "sourcesContent": [
+    "require('babel-polyfill')\n/**\n * Simulate Private properties using WeakMap\n * @return [Function] sets or gets property from weakmap\n */\nmodule.exports = () => {\n\tlet properties = new WeakMap()\n\tlet currentContext = {}\n\n    return (context) => {\n        \n        if (!properties.has(context)) {\n            properties.set(context, {})\n            currentContext[context] = JSON.stringify(context)\n        }\n\n        if(JSON.stringify(context) != currentContext[context]) {\n        \treturn {}\n        }\n\n        return properties.get(context)\n    }\n}"
+  ]
+}
