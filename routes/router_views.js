@@ -301,4 +301,12 @@ module.exports = function(app) {
 
   })
 
+  app.post('/callback_nlu', function(req, res){
+
+    var msg = req.body
+
+    console.log(msg)
+
+  })
+
 }
