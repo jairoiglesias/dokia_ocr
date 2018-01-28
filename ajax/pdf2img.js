@@ -1,60 +1,66 @@
 
-// TESTE 01
+// // TESTE 01
 
-let PDF2Pic = require('pdf2pic')
-let converter = new PDF2Pic({
-    density: 500,               // output pixels per inch
-    savename: "teste",          // output file name
-    savedir: "./ajax/",         // output file location
-    format: "png",              // output file format
-    size: 2000                  // output size in pixels
-})
+// let PDF2Pic = require('pdf2pic')
+// let converter = new PDF2Pic({
+//     density: 500,               // output pixels per inch
+//     savename: "teste",          // output file name
+//     savedir: "./ajax/",         // output file location
+//     format: "png",              // output file format
+//     size: 2000                  // output size in pixels
+// })
+
+// function convertPdf2Img(callback){
+    
+//     // fuck it, we can also convert all pages to pdf by
+//     // supplying -1 as second argument
+
+//     converter.convertBulk("./ajax/test.pdf", -1).then(resolve => {
+        
+//         console.log("image converted successfully")
+//         callback(resolve)
+
+//     })
+// }
+
+// // convertPdf2Img(function(resolve){
+
+// //     console.log(resolve)
+
+// // })
+
+
+// teste 2
+
+var fs      = require('fs');
+var path    = require('path');
+var pdf2img = require('pdf2img');
 
 function convertPdf2Img(callback){
-    
-    // fuck it, we can also convert all pages to pdf by
-    // supplying -1 as second argument
 
-    converter.convertBulk("./ajax/test.pdf", -1).then(resolve => {
-        
-        console.log("image converted successfully")
-        callback(resolve)
+    var input   = __dirname + '/test.pdf';
 
-    })
+    pdf2img.setOptions({
+        type: 'png',                                // png or jpg, default jpg
+        size: 1024,                                 // default 1024
+        density: 600,                               // default 600
+        outputdir: __dirname + path.sep + 'output', // output folder, default null (if null given, then it will create folder name same as file name)
+        outputname: 'test',                         // output file name, dafault null (if null given, then it will create image name same as input name)
+        page: null                                  // convert selected page, default null (if null given, then it will convert all pages)
+    });
+
+    pdf2img.convert(input, function(err, info) {
+        if (err) {
+            console.log(err)
+        }
+        else{
+            console.log(info);
+            callback(info)
+        } 
+    });
+
 }
-
-// convertPdf2Img(function(resolve){
-
-//     console.log(resolve)
-
-// })
 
 module.exports = {
     convertPdf2Img
 }
-
-// teste 02
-
-// var pdf2image = require('pdf2image');
- 
-// //converts all the pages of the given pdf using the default options  
-// pdf2image.convertPDF('./ajax/test.pdf').then(
-//     function(pageList){
-//         console.log(pageList);
-//     }
-// ).catch(function(err){
-//     console.log(err)
-// })
-
-// teste 03
-
-// var PDFImage = require("pdf-image").PDFImage;
-
-// var pdfImage = new PDFImage("test.pdf");
-// console.log(pdfImage)
-// pdfImage.convertPage(0).then(function (imagePath) {
-//   // 0-th page (first page) of the slide.pdf is available as slide-0.png
-// //   fs.existsSync("/tmp/slide-0.png") // => true
-//     console.log('teste')
-//     console.log(imagePath)
-// });
