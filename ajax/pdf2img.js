@@ -15,14 +15,19 @@ function convertPdf2Img(callback){
     // fuck it, we can also convert all pages to pdf by
     // supplying -1 as second argument
 
-    converter.convertBulk("./ajax/teste.pdf", -1).then(resolve => {
+    converter.convertBulk("./ajax/test.pdf", -1).then(resolve => {
         
         console.log("image converted successfully")
-        console.log(resolve)
         callback(resolve)
-        
+
     })
 }
+
+// convertPdf2Img(function(resolve){
+
+//     console.log(resolve)
+
+// })
 
 module.exports = {
     convertPdf2Img
