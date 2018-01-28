@@ -67,7 +67,7 @@ module.exports = function(app) {
     req.connection.setTimeout(999999)
 
     console.log('REQUEST ======================')
-    console.log(res.body)
+    console.log(req.body.docSend)
     console.log('==============================')
     console.log(req)
     console.log(req.files)
