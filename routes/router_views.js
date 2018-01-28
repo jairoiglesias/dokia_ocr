@@ -4,6 +4,7 @@ module.exports = function(app) {
   var multer  = require('multer')
   var AWS = require('aws-sdk')
   var fs = require('fs')
+  var rp = require('request-promise').defaults({simple : false})
 
   var upload = multer({ dest: 'uploads/' })
 
@@ -69,8 +70,13 @@ module.exports = function(app) {
     console.log('REQUEST ======================')
     console.log(req.body.docSend)
     console.log('==============================')
-    console.log(req)
     console.log(req.files)
+
+    // Cria objeto JSON que sera usado para envio de requisicao
+    var reqWKS = {
+      docSend: req.body.docSend,
+      ocr: []
+    }
 
     var originalname = req.files[0].originalname
     var originalnameRaw = originalname.split('.')[0]
@@ -111,8 +117,8 @@ module.exports = function(app) {
 
         m_pdf2img.convertPdf2Img(newFileNameImage, function(result){
 
-        
-          function processaOCRLote(result, index, callback){
+          
+          function processaOCRLote(result, index, reqWKS, callback){
 
             // ### Inicia o procedimento de analise OCR ###
 
@@ -128,7 +134,11 @@ module.exports = function(app) {
 
               console.log(ocrData)
 
-              var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'.txt'
+              var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'_' + (index + 1) + '.txt'
+
+              // ocrData = ocrData.replace(String.fromCharCode(10), '').replace(String.fromCharCode(13), '')
+              ocrData = ocrData.replace(/(\r\n|\n|\r)/gm," ");
+              ocrData = ocrData.replace(/\s+/g," ");
 
               fs.writeFile(newFileNameText, ocrData, function(err){
 
@@ -137,12 +147,14 @@ module.exports = function(app) {
                 console.log('Extração de dados da imagem realizada com sucesso')
                 console.log(index)
 
+                reqWKS.ocr.push(ocrData)
+
                 if(index == (result.message.length - 1)){
                   callback()
                 }
                 else{
                   var newIndex = index + 1
-                  processaOCRLote(result, newIndex, callback)
+                  processaOCRLote(result, newIndex, reqWKS, callback)
                 }
 
               })
@@ -152,10 +164,56 @@ module.exports = function(app) {
 
           }
 
-          processaOCRLote(result, 0, function(){
+          processaOCRLote(result, 0, reqWKS, function(){
 
             console.log('Processamento de OCR finalizado')
-            res.send('Finalizado com sucesso')
+
+            if(reqWKS.ocr.length == 0){
+
+              res.send('Finalizado com sucesso')
+
+            }
+            else{
+
+              reqWKS.ocr.forEach(function(ocrData, ocrIndex){
+
+                console.log(ocrIndex, reqWKS.ocr.length)
+                console.log('==============================')
+
+                var url = 'https://dokia-project.mybluemix.net/process'
+
+                var requestOptions = {
+                  method: 'POST',
+                  resolveWithFullResponse: true,
+                  uri: url,
+                  json: true,
+                  body: {
+                    "texto": ocrData
+                  }
+                }
+
+                rp(requestOptions).then(function(response){
+
+                  console.log('Requisicao a EndPoint enviado com sucesso!')
+                  
+                  if(ocrIndex == (reqWKS.ocr.length - 1)){
+                    res.send('Finalizado com sucesso')
+                  }
+
+                }).catch(function(err){
+
+                  console.log('Erro EndPoint Handled !')
+                  console.log(err.error)
+
+                  if(ocrIndex == (reqWKS.ocr.length - 1)){
+                    res.send('Finalizado com sucesso')
+                  }
+
+                })
+
+              })
+
+            }
 
           })
 
