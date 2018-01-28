@@ -63,7 +63,7 @@ module.exports = function(app) {
   })
 
   app.post('/upload_doc', upload.any(), (req, res) => {
-    
+  )
     req.connection.setTimeout(999999)
 
     console.log(res.body)
@@ -81,7 +81,7 @@ module.exports = function(app) {
     // Cria o diretorio para guardar o PDF
     fs.mkdir(newFolderName, function(err){
       
-      if(err.code == 'EEXIST'){
+      if(err){
         console.log(err)
       }
       else{
