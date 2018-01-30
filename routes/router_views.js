@@ -42,9 +42,12 @@ module.exports = function(app) {
     req.connection.setTimeout(999999)
 
     console.log('REQUEST ======================')
+    console.log('variavel docSend:')
     console.log(req.body.docSend)
     console.log('==============================')
+    console.log('Arquivos de PDF via Upload:')
     console.log(req.files)
+    console.log('==============================')
 
     // Cria objeto JSON que sera usado para envio de requisicao
     var reqWKS = {
@@ -141,6 +144,7 @@ module.exports = function(app) {
           processaOCRLote(result, 0, reqWKS, function(){
 
             console.log('Processamento de OCR finalizado')
+            console.log('===============================================')
 
             if(reqWKS.ocr.length == 0){
 
@@ -149,10 +153,9 @@ module.exports = function(app) {
             }
             else{
 
-              reqWKS.ocr.forEach(function(ocrData, ocrIndex){
+              console.log('Enviando os dados de OCR para EndPoint do NLU/WKS para analise')
 
-                console.log(ocrIndex, reqWKS.ocr.length)
-                console.log('==============================')
+              reqWKS.ocr.forEach(function(ocrData, ocrIndex){
 
                 var url = 'https://dokia-project.mybluemix.net/process'
 
@@ -168,7 +171,7 @@ module.exports = function(app) {
 
                 rp(requestOptions).then(function(response){
 
-                  console.log('Requisicao a EndPoint enviado com sucesso!')
+                  console.log('OCR index: ' + ocrIndex + ' => Requisicao a EndPoint enviado com sucesso!')
                   
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
                     res.send('Finalizado com sucesso')
@@ -279,7 +282,10 @@ module.exports = function(app) {
 
     var msg = req.body
 
+    console.log('URL de callback invocado pelo serviço NODERED do NLU')
     console.log(msg)
+
+    res.send(msg)
 
   })
 
