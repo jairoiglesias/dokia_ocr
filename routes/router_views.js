@@ -39,7 +39,7 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
     
-    req.connection.setTimeout(999999)
+    req.connection.setTimeout(0)
 
     console.log('REQUEST ======================')
     console.log('variavel docSend:')
