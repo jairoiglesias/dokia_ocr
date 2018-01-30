@@ -8,8 +8,6 @@ module.exports = function(app) {
 
   var upload = multer({ dest: 'uploads/' })
 
-  const COMMAND = 'python validation_driver.py'
-
   app.get('/teste', (req, res) => {
     res.send('teste realizado com sucesso!')
   })

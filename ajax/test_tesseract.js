@@ -33,9 +33,11 @@ function extractSingleImage(imageFullPath, callback){
         if(err) {
             console.error(err);
             console.log('Erro ao tentar ler arquivo no Tesseract')
+            console.log(imageFullPath)
             callback(err)
         } else {
             console.log('Reconhecimento OCR concluído!')
+            console.log(imageFullPath)
             callback(text)
         }
     })
