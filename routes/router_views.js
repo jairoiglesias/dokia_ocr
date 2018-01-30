@@ -1,44 +1,18 @@
 
 module.exports = function(app) {
 
-  var multer  = require('multer')
-  var AWS = require('aws-sdk')
+  var multer = require('multer')
   var fs = require('fs')
   var rp = require('request-promise').defaults({simple : false})
+  var proc = require('child_process')
 
   var upload = multer({ dest: 'uploads/' })
 
-  // Configura AWS S3
-  var bucketName = 'dokia'
-  var AWSAccessKeyId = 'AKIAJQEDL6PJ7PWTI5HA'
-  var AWSSecretKey = '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'
+  const COMMAND = 'python validation_driver.py'
 
-  // Valida a sessão no S3
-  var s3 = new AWS.S3({
-    accessKeyId: AWSAccessKeyId,
-    secretAccessKey: AWSSecretKey,
-    region: 'sa-east-1'
+  app.get('/teste', (req, res) => {
+    res.send('teste realizado com sucesso!')
   })
-
-  // Upload file usando o serviço do S3 da AWS
-  function uploadAWS_S3(s3, params, callback){
-
-    s3.putObject(params, function(err, data){
-
-      if(err){
-        console.log(err)
-        callback(err)
-      }
-      else{
-
-        console.log('Upload na Amazon S3 processado com sucesso!')
-        callback(data)
-
-      }
-        
-    })
-
-  }
 
   app.get('/', (req, res) => {
     res.send('Tesseract NodeJs Started !!!')
