@@ -278,11 +278,32 @@ module.exports = function(app) {
 
     var msg = req.body
 
-    console.log('URL de callback invocado pelo serviço NODERED do NLU')
+    console.log('URL de callback invocado pelo serviço NodeRed do NLU')
     console.log(msg)
+    console.log('=====================================')
 
-    res.send(msg)
+    console.log('Enviado dados para EndPoint do Python no Heroku')
 
+    var url = ''
+
+    var requestOptions = {
+      method: 'POST',
+      resolveWithFullResponse: true,
+      uri: url,
+      json: true,
+      body: msg
+    }
+
+    rp(requestOptions).then(function(response){
+      
+      var body = response.body
+
+      console.log(body)
+
+      res.send(msg)
+
+    })
+    
   })
 
 }
