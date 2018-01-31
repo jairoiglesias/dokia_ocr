@@ -1,4 +1,6 @@
 
+global.dadosCatossinho = ''
+
 module.exports = function(app) {
 
   var multer = require('multer')
@@ -170,7 +172,10 @@ module.exports = function(app) {
                   console.log('OCR index: ' + ocrIndex + ' => Requisicao a EndPoint enviado com sucesso!')
                   
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
+
+                    global.dadosCatossinho = reqWKS
                     res.send('Finalizado com sucesso')
+
                   }
 
                 }).catch(function(err){
@@ -179,7 +184,10 @@ module.exports = function(app) {
                   console.log(err.error)
 
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
+
+                    global.dadosCatossinho = reqWKS
                     res.send('Finalizado com sucesso')
+
                   }
 
                 })
@@ -274,6 +282,8 @@ module.exports = function(app) {
 
   })
 
+  // Callback invocado pelo NodeRed com os dados do NLU
+
   app.post('/callback_nlu', function(req, res){
 
     var msg = req.body
@@ -304,6 +314,12 @@ module.exports = function(app) {
 
     })
     
+  })
+
+  app.get('/catossinho', (req, res) => {
+
+    res.send(globa.dadosCatossinho)
+
   })
 
 }
