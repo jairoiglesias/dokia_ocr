@@ -300,7 +300,7 @@ module.exports = function(app) {
     // }
 
     console.log('=====================================================')
-    console.log(global)
+    console.log(global.dadosCatossinho)
     console.log(msg)
     console.log('=====================================================')
 
