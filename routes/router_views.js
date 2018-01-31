@@ -300,8 +300,7 @@ module.exports = function(app) {
     }
 
     console.log(reg)
-    console.log('END')
-    process.exit()
+    console.log(globa.dadosCatossinho.docSend.length)
 
     var url = 'https://dokia-validation.herokuapp.com/'
 
