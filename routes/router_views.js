@@ -1,5 +1,5 @@
 
-global.dadosCatossinho = ''
+var dadosCatossinho = ''
 
 module.exports = function(app) {
 
@@ -47,9 +47,10 @@ module.exports = function(app) {
     console.log(req.files)
     console.log('==============================')
 
+    dadosCatossinho = req.body.docSend
+
     // Cria objeto JSON que sera usado para envio de requisicao
     var reqWKS = {
-      docSend: req.body.docSend,
       ocr: []
     }
 
@@ -173,12 +174,7 @@ module.exports = function(app) {
                   
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
 
-                    global.dadosCatossinho = reqWKS
                     res.send('Finalizado com sucesso')
-                    
-
-                    console.log(global.dadosCatossinho)
-                    process.exit()
 
                   }
 
@@ -189,7 +185,6 @@ module.exports = function(app) {
 
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
 
-                    global.dadosCatossinho = reqWKS
                     res.send('Finalizado com sucesso')
 
                   }
@@ -303,9 +298,6 @@ module.exports = function(app) {
       doc: msg 
     }
 
-    console.log(reg)
-    console.log(globa.dadosCatossinho.docSend.length)
-
     var url = 'https://dokia-validation.herokuapp.com/'
 
     var requestOptions = {
@@ -335,7 +327,7 @@ module.exports = function(app) {
     //   doc: 
     // }
 
-    res.send(global.dadosCatossinho)
+    res.send(dadosCatossinho)
 
   })
 
