@@ -318,7 +318,7 @@ module.exports = function(app) {
 
   app.get('/catossinho', (req, res) => {
 
-    res.send(globa.dadosCatossinho)
+    res.send(global.dadosCatossinho)
 
   })
 
