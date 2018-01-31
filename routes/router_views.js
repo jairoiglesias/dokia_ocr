@@ -176,6 +176,9 @@ module.exports = function(app) {
                     global.dadosCatossinho = reqWKS
                     res.send('Finalizado com sucesso')
 
+                    console.log(global.dadosCatossinho)
+                    process.exit()
+
                   }
 
                 }).catch(function(err){
