@@ -294,8 +294,8 @@ module.exports = function(app) {
     console.log('Enviado dados para EndPoint do Python no Heroku')
 
     var reg = {
-      base: global.dadosCatossinho.docSend,
-      doc: msg 
+      base: dadosCatossinho,
+      doc: msg
     }
 
     var url = 'https://dokia-validation.herokuapp.com/'
