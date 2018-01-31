@@ -284,7 +284,7 @@ module.exports = function(app) {
 
     console.log('Enviado dados para EndPoint do Python no Heroku')
 
-    var url = ''
+    var url = 'https://dokia-validation.herokuapp.com/'
 
     var requestOptions = {
       method: 'POST',
