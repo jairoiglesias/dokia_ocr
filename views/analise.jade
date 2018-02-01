@@ -16,13 +16,13 @@ block content
         }
 
         #lista_imagens_analise img{
-            width: 40%;
+            width: 30%;
             height: 500px;
             float:left;
         }
 
         #lista_imagens_analise pre{
-            width: 30%;
+            width: 32%;
             height: 500px;
             float:left;
         }
@@ -90,7 +90,7 @@ block content
                                 var campo = entity.type.split('_')[1]
                                 var valor = entity.text
 
-                                htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+                                htmlDataNLU += '<span style="float:left;margin-top:5px">'+campo+' : '+valor+'</span><br>'
 
                             })
 
@@ -111,7 +111,7 @@ block content
                                 var desc = regra.description
                                 var status = regra.validated
 
-                                htmlDataAnalise += '<span>'+desc+' : '+status+'</span><br><br>'
+                                htmlDataAnalise += '<span "float:left;margin-top:5px">'+desc+' : '+status+'</span><br>'
 
                             })
 
