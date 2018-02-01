@@ -29,6 +29,10 @@ module.exports = function(app) {
     res.render('analise')
   })
 
+  app.get('/analise_v2', (req, res) => {
+    res.render('analise_v2')
+  })
+
   app.get('/get_image/:imagem', (req, res) => {
     
     var imagem = req.params.imagem
