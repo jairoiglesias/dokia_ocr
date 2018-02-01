@@ -31,6 +31,8 @@ block content
   
         $(document).ready(function(){
 
+            dadosAnalise = ''
+
             // Recupera lista de imagens
             var promiseListaImagens = $.ajax({
                 url: 'lista_imagens',
@@ -57,7 +59,7 @@ block content
                     arrTipoDoc['g'] = 'guia'
                     arrTipoDoc['p'] = 'petição'
 
-                    imagens.forEach(function(imagem, index){
+                    imagens.forEach(function(imagem, indexImagem){
 
                         var imagemPath = 'get_image/'+imagem
 
@@ -70,7 +72,7 @@ block content
 
                         var tipoDoc = ''
 
-                        analise.dadosNLU.entities.forEach(function(entity, index){
+                        analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
 
                             var type = entity.type.split('_')[0]
 
