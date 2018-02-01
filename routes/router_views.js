@@ -4,52 +4,6 @@ var dadosCatossinho = ''
 var dadosNLU = []
 var dadosAnalise = []
 
-function processaOCRLote(result, index, reqWKS, callback){
-
-  // ### Inicia o procedimento de analise OCR ###
-
-  var ocr = require('./../ajax/test_tesseract.js')
-
-  // console.log(result.message[index])
-  
-  var imagePath = result.message[index].path
-
-  console.log('Iniciando OCR Tesseract da imagem ' + imagePath)
-
-  ocr.extractSingleImage(imagePath, function(ocrData){
-
-    console.log(ocrData)
-
-    var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'_' + (index + 1) + '.txt'
-
-    // ocrData = ocrData.replace(String.fromCharCode(10), '').replace(String.fromCharCode(13), '')
-    ocrData = ocrData.replace(/(\r\n|\n|\r)/gm," ");
-    ocrData = ocrData.replace(/\s+/g," ");
-
-    fs.writeFile(newFileNameText, ocrData, function(err){
-
-      if(err) throw err
-
-      console.log('Extração de dados da imagem realizada com sucesso')
-      console.log(index)
-
-      reqWKS.ocr.push(ocrData)
-
-      if(index == (result.message.length - 1)){
-        callback()
-      }
-      else{
-        var newIndex = index + 1
-        processaOCRLote(result, newIndex, reqWKS, callback)
-      }
-
-    })
-    
-  })
-
-
-}
-
 module.exports = function(app) {
 
   var multer = require('multer')
@@ -177,6 +131,52 @@ module.exports = function(app) {
         console.log('Iniciando a conversão do PDF para imagens')
 
         m_pdf2img.convertPdf2Img(newFileNameImage, function(result){
+
+          function processaOCRLote(result, index, reqWKS, callback){
+
+            // ### Inicia o procedimento de analise OCR ###
+
+            var ocr = require('./../ajax/test_tesseract.js')
+
+            // console.log(result.message[index])
+            
+            var imagePath = result.message[index].path
+
+            console.log('Iniciando OCR Tesseract da imagem ' + imagePath)
+
+            ocr.extractSingleImage(imagePath, function(ocrData){
+
+              console.log(ocrData)
+
+              var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'_' + (index + 1) + '.txt'
+
+              // ocrData = ocrData.replace(String.fromCharCode(10), '').replace(String.fromCharCode(13), '')
+              ocrData = ocrData.replace(/(\r\n|\n|\r)/gm," ");
+              ocrData = ocrData.replace(/\s+/g," ");
+
+              fs.writeFile(newFileNameText, ocrData, function(err){
+
+                if(err) throw err
+
+                console.log('Extração de dados da imagem realizada com sucesso')
+                console.log(index)
+
+                reqWKS.ocr.push(ocrData)
+
+                if(index == (result.message.length - 1)){
+                  callback()
+                }
+                else{
+                  var newIndex = index + 1
+                  processaOCRLote(result, newIndex, reqWKS, callback)
+                }
+
+              })
+              
+            })
+
+
+          }
 
           // Efetua o processamento OCR das imagens
           processaOCRLote(result, 0, reqWKS, function(){
