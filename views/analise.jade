@@ -31,6 +31,8 @@ block content
   
         $(document).ready(function(){
 
+            dadosAnalise = ''
+
             // Recupera lista de imagens
             var promiseListaImagens = $.ajax({
                 url: 'lista_imagens',
@@ -52,18 +54,74 @@ block content
 
                     var html = ''
 
-                    imagens.forEach(function(imagem, index){
+                    var arrTipoDoc = []
+                    arrTipoDoc['c'] = 'comprovante'
+                    arrTipoDoc['g'] = 'guia'
+                    arrTipoDoc['p'] = 'petição'
+
+                    imagens.forEach(function(imagem, indexImagem){
 
                         var imagemPath = 'get_image/'+imagem
 
                         html += '<div>'
                         html += '<img src="'+imagemPath+'" />'
-                        html += '<pre>'+JSON.stringify(analise.dadosNLU[index], undefined, 2)+'</pre>'
-                        html += '<pre>'+JSON.stringify(analise.dadosAnalise[index], undefined, 2)+'</pre>'
+
+                        // ### Percorre os dados de NLU ###
+                        
+                        var htmlDataNLU = ''
+
+                        var tipoDoc = ''
+
+                        console.log(indexImagem)
+                        console.log(analise.dadosNLU[indexImagem])
+                        console.log('===================================')
+
+                        if(analise.dadosNLU[indexImagem] != undefined){
+
+                            analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+
+                                var type = entity.type.split('_')[0]
+
+                                if(tipoDoc.length == 0){
+                                    tipoDoc = arrTipoDoc[type]
+                                    htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
+                                }
+                                
+                                var campo = entity.type.split('_')[1]
+                                var valor = entity.text
+
+                                htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+
+                            })
+
+                            html += '<pre>'+htmlDataNLU+'</pre>'
+
+                        }
+
+                        // ### Percorre os dados de Analise ###
+                        
+                        var htmlDataAnalise = ''
+
+                        htmlDataAnalise += '<span>Regras</span><br><br>'
+
+                        if(analise.dadosAnalise[indexImagem] != undefined){
+
+                            analise.dadosAnalise[indexImagem].forEach(function(regra, indexRegra){
+
+                                var desc = regra.description
+                                var status = regra.validated
+
+                                htmlDataAnalise += '<span style="font-weight:bold;font-family:Calibri">'+desc+' : '+status+'</span><br><br>'
+
+                            })
+
+                            html += '<pre>'+htmlDataAnalise+'</pre>'
+
+                        }
+
+                        //- html += '<pre>'+JSON.stringify(analise.dadosAnalise[indexImagem], undefined, 2)+'</pre>'
+
                         html += '</div>'
-
-                        console.log('imagem inserida')
-
 
                     })
 
