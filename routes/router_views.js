@@ -1,5 +1,6 @@
 
 var dadosCatossinho = ''
+var dadosNLU = ''
 var dadosAnalise = []
 
 module.exports = function(app) {
@@ -40,6 +41,7 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
 
+    dadosNLU = []
     dadosAnalise = []
 
     console.log('### Request Front Catossi ###')
@@ -289,6 +291,8 @@ module.exports = function(app) {
   app.post('/callback_nlu', function(req, res){
 
     var msg = req.body
+
+    dadosNLU.push(msg)
 
     console.log('URL de callback invocado pelo serviço NodeRed do NLU')
     console.log(msg)
