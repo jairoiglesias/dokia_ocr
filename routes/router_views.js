@@ -29,8 +29,8 @@ module.exports = function(app) {
     res.render('analise')
   })
 
-  app.get('/analise_v2', (req, res) => {
-    res.render('analise_v2')
+  app.get('/analise_v3', (req, res) => {
+    res.render('analise_v3')
   })
 
   app.get('/get_image/:imagem', (req, res) => {
@@ -48,7 +48,6 @@ module.exports = function(app) {
       res.send(data)
       
     })
-
 
   })
 

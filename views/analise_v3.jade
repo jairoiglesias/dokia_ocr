@@ -67,7 +67,7 @@ block content
                         html += '<img src="'+imagemPath+'" />'
 
                         // ### Percorre os dados de NLU ###
-
+                        
                         var htmlDataNLU = ''
 
                         var tipoDoc = ''
@@ -79,7 +79,7 @@ block content
                         if(analise.dadosNLU[indexImagem] != undefined){
 
                             analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
-                                
+
                                 var type = entity.type.split('_')[0]
 
                                 if(tipoDoc.length == 0){
