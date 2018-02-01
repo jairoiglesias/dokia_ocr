@@ -54,8 +54,8 @@ block content
 
                         html += '<div>'
                         html += '<img src="'+imagemPath+'" />'
-                        html += '<pre>'+JSON.stringify(analise.dadosNLU[index])+'</pre>'
-                        html += '<pre>'+JSON.stringify(analise.dadosAnalise[index])+'</pre>'
+                        html += '<pre>'+JSON.stringify(analise.dadosNLU[index], undefined, 2)+'</pre>'
+                        html += '<pre>'+JSON.stringify(analise.dadosAnalise[index], undefined, 2)+'</pre>'
                         html += '</div>'
 
                         console.log('imagem inserida')
