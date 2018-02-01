@@ -72,23 +72,25 @@ block content
 
                         var tipoDoc = ''
 
-                        console.log(analise.dadosNLU[indexImagem])
+                        console.log(indexImagem)
+                        console.log(nalise.dadosNLU[indexImagem])
+                        console.log('===================================')
 
-                        analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                        //- analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                        //-     ]console.log('hue')
+                        //-     var type = entity.type.split('_')[0]
 
-                            var type = entity.type.split('_')[0]
-
-                            if(tipoDoc.length == 0){
-                                tipoDoc = arrTipoDoc[type]
-                                htmlDataNLU += '<span>'+tipoDoc+'</span><br>'
-                            }
+                        //-     if(tipoDoc.length == 0){
+                        //-         tipoDoc = arrTipoDoc[type]
+                        //-         htmlDataNLU += '<span>'+tipoDoc+'</span><br>'
+                        //-     }
                             
-                            var campo = entity.type.split('_')[1]
-                            var valor = entity.text
+                        //-     var campo = entity.type.split('_')[1]
+                        //-     var valor = entity.text
 
-                            htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+                        //-     htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
 
-                        })
+                        //- })
 
                         html += '<pre>'+htmlDataNLU+'</pre>'
 
