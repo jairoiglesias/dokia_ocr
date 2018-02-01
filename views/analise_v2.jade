@@ -72,6 +72,8 @@ block content
 
                         var tipoDoc = ''
 
+                        console.log(analise.dadosNLU[indexImagem])
+
                         analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
 
                             var type = entity.type.split('_')[0]
