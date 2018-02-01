@@ -40,8 +40,7 @@ module.exports = function(app) {
     fs.readFile(imagemPath, function(err, data) {
 
       if(err) throw err
-
-      console.log(data)
+      
       res.send(data)
       
     })
