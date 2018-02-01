@@ -4,6 +4,10 @@ block content
 
     style(type="text/css").
 
+    #div_analise{
+        padding: 50px;
+    }
+
         #lista_imagens_analise div{
             padding: 5px;
             border-bottom: 1px solid;
@@ -59,7 +63,7 @@ block content
                         html += '</div>'
 
                         console.log('imagem inserida')
-                        
+
 
                     })
 
@@ -71,6 +75,6 @@ block content
 
         })
 
-    div(class='container')
+    div(id="div_analise")
         h3 Analise de Imagems
         div(id='lista_imagens_analise')
