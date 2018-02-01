@@ -63,9 +63,9 @@ module.exports = function(app) {
     var originalname = req.files[0].originalname
     var originalnameRaw = originalname.split('.')[0]
 
+    fileNameUpload = originalnameRaw
+    
     var file = req.files[0].path
-
-    fileNameUpload = file
 
     var newFileNameImage = './uploads/'+originalnameRaw+'/'+originalname
 
