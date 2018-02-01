@@ -84,7 +84,7 @@ block content
 
                                 if(tipoDoc.length == 0){
                                     tipoDoc = arrTipoDoc[type]
-                                    htmlDataNLU += '<span>Tipo Documento: '+tipoDoc+'</span><br><br>'
+                                    htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
                                 }
                                 
                                 var campo = entity.type.split('_')[1]
@@ -111,7 +111,7 @@ block content
                                 var desc = regra.description
                                 var status = regra.validated
 
-                                htmlDataAnalise += '<span>'+desc+' : '+status+'</span><br>'
+                                htmlDataAnalise += '<span style="font-weight:bold;font-family:Calibri">'+desc+' : '+status+'</span><br><br>'
 
                             })
 
