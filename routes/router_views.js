@@ -1,5 +1,6 @@
 
 var dadosCatossinho = ''
+var dadosAnalise = []
 
 module.exports = function(app) {
 
@@ -312,6 +313,8 @@ module.exports = function(app) {
 
       var body = response.body
 
+      dadosAnalise.push(body)
+
       console.log(body)
       res.send(body)
 
@@ -321,7 +324,11 @@ module.exports = function(app) {
 
   app.get('/catossinho', (req, res) => {
 
-    res.send(dadosCatossinho)
+    var resp = {
+      dadosCatossinho, dadosAnalise
+    }
+
+    res.send(resp)
 
   })
 
