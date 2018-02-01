@@ -1,0 +1,67 @@
+extends header
+
+block content
+
+    style(type="text/css").
+
+        #lista_imagens_analise div{
+            padding: 5px;
+            border-bottom: 1px solid;
+            margin-bottom:5px;
+        }
+
+        #lista_imagens_analise img{
+            width: 300px;
+            height: 500px;
+        }
+
+    script(type="text/javascript").
+  
+        $(document).ready(function(){
+
+            // Recupera lista de imagens
+            var promiseListaImagens = $.ajax({
+                url: 'lista_imagens',
+                type: 'GET',
+
+            })
+
+            promiseListaImagens.then(function(imagens){
+
+                // Recupera os dados da analise
+                var promiseAnalise = $.ajax({
+                    url: 'catossinho',
+                    type: 'GET'
+                })
+
+                promiseAnalise.then(function(analise){
+
+                    console.log(analise)
+
+                    var html = ''
+
+                    imagens.forEach(function(imagem, index){
+
+                        var imagemPath = 'get_image/'+imagem
+
+                        html += '<div>'
+                        html += '<img src="'+imagemPath+'" />'
+                        html += '<pre>'+JSON.stringify(analise.dadosNLU[index])+'</pre>'
+                        html += '<pre>'+JSON.stringify(analise.dadosAnalise[index])+'</pre>'
+                        html += '</div>'
+
+                        console.log('imagem inserida')
+
+                    })
+
+                    $('#lista_imagens_analise').html(html)
+
+                })
+
+            })
+
+        })
+
+    div(class='container')
+        h3 Analise de Imagems
+        div(id='lista_imagens_analise')
