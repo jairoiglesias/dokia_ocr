@@ -40,6 +40,8 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
 
+    dadosAnalise = []
+
     console.log('### Request Front Catossi ###')
     console.log('variavel docSend:')
     console.log(req.body.docSend)
