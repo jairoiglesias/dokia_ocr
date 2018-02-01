@@ -311,8 +311,9 @@ module.exports = function(app) {
     rp(requestOptions).then(function(response){
 
       var body = response.body
-      
-      res.send(msg)
+
+      console.log(body)
+      res.send(body)
 
     })
     
