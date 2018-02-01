@@ -39,7 +39,7 @@ module.exports = function(app) {
 
   app.post('/upload_doc', upload.any(), (req, res) => {
 
-    console.log('REQUEST ======================')
+    console.log('### Request Front Catossi ###')
     console.log('variavel docSend:')
     console.log(req.body.docSend)
     console.log('==============================')
@@ -290,9 +290,9 @@ module.exports = function(app) {
     console.log('URL de callback invocado pelo serviço NodeRed do NLU')
     console.log(msg)
     console.log('=====================================')
-
     console.log('Enviado dados para EndPoint do Python no Heroku')
 
+    // Monta o JSON contendo os dados do Front + Processamento NLU
     var reg = {
       base: dadosCatossinho,
       doc: msg
@@ -309,11 +309,9 @@ module.exports = function(app) {
     }
 
     rp(requestOptions).then(function(response){
-      
+
       var body = response.body
-
-      console.log(body)
-
+      
       res.send(msg)
 
     })
@@ -321,11 +319,6 @@ module.exports = function(app) {
   })
 
   app.get('/catossinho', (req, res) => {
-
-    // var reg = {
-    //   base: global.dadosCatossinho.docSend,
-    //   doc: 
-    // }
 
     res.send(dadosCatossinho)
 
