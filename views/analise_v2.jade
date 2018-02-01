@@ -76,23 +76,27 @@ block content
                         console.log(analise.dadosNLU[indexImagem])
                         console.log('===================================')
 
-                        //- analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
-                        //-     ]console.log('hue')
-                        //-     var type = entity.type.split('_')[0]
+                        if(analise.dadosNLU[indexImagem] != undefined){
 
-                        //-     if(tipoDoc.length == 0){
-                        //-         tipoDoc = arrTipoDoc[type]
-                        //-         htmlDataNLU += '<span>'+tipoDoc+'</span><br>'
-                        //-     }
-                            
-                        //-     var campo = entity.type.split('_')[1]
-                        //-     var valor = entity.text
+                            analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                                ]console.log('hue')
+                                var type = entity.type.split('_')[0]
 
-                        //-     htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+                                if(tipoDoc.length == 0){
+                                    tipoDoc = arrTipoDoc[type]
+                                    htmlDataNLU += '<span>'+tipoDoc+'</span><br>'
+                                }
+                                
+                                var campo = entity.type.split('_')[1]
+                                var valor = entity.text
 
-                        //- })
+                                htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
 
-                        html += '<pre>'+htmlDataNLU+'</pre>'
+                            })
+
+                            html += '<pre>'+htmlDataNLU+'</pre>'
+
+                        })
 
                         html += '<pre>'+JSON.stringify(analise.dadosAnalise[indexImagem], undefined, 2)+'</pre>'
                         html += '</div>'
