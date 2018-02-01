@@ -1,4 +1,5 @@
 
+var fileNameUpload = ''
 var dadosCatossinho = ''
 var dadosNLU = []
 var dadosAnalise = []
@@ -64,6 +65,8 @@ module.exports = function(app) {
 
     var file = req.files[0].path
 
+    fileNameUpload = file
+
     var newFileNameImage = './uploads/'+originalnameRaw+'/'+originalname
 
     var newFolderName = './uploads/'+originalnameRaw
@@ -98,7 +101,6 @@ module.exports = function(app) {
 
         m_pdf2img.convertPdf2Img(newFileNameImage, function(result){
 
-          
           function processaOCRLote(result, index, reqWKS, callback){
 
             // ### Inicia o procedimento de analise OCR ###
@@ -331,7 +333,7 @@ module.exports = function(app) {
   app.get('/catossinho', (req, res) => {
 
     var resp = {
-      dadosCatossinho, dadosNLU, dadosAnalise
+      fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
     }
 
     res.send(resp)
