@@ -1,6 +1,6 @@
 
 var dadosCatossinho = ''
-var dadosNLU = ''
+var dadosNLU = []
 var dadosAnalise = []
 
 module.exports = function(app) {
@@ -331,7 +331,7 @@ module.exports = function(app) {
   app.get('/catossinho', (req, res) => {
 
     var resp = {
-      dadosCatossinho, dadosAnalise
+      dadosCatossinho, dadosNLU, dadosAnalise
     }
 
     res.send(resp)
