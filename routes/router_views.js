@@ -1,4 +1,5 @@
 
+var hashId = ''
 var fileNameUpload = ''
 var dadosCatossinho = ''
 var dadosNLU = []
@@ -13,10 +14,6 @@ module.exports = function(app) {
 
   var upload = multer({ dest: 'uploads/' })
 
-  app.get('/teste', (req, res) => {
-    res.send('teste realizado com sucesso!')
-  })
-
   app.get('/', (req, res) => {
     res.send('Tesseract NodeJs Started !!!')
   })
@@ -29,18 +26,16 @@ module.exports = function(app) {
     res.render('analise')
   })
 
-  app.get('/analise_v3', (req, res) => {
-    res.render('analise_v3')
-  })
-
   app.get('/get_image/:imagem', (req, res) => {
     
     var imagem = req.params.imagem
 
     var imagemPath = './ajax/output/'+imagem
 
+    // Configura o retorno do content
     res.set('Content-Type', 'image/png')
 
+    // Efetua leitura da imagem
     fs.readFile(imagemPath, function(err, data) {
 
       if(err) throw err
@@ -179,6 +174,8 @@ module.exports = function(app) {
 
 
           }
+          
+          res.send('1')
 
           // Efetua o processamento OCR das imagens
           processaOCRLote(result, 0, reqWKS, function(){
@@ -215,7 +212,7 @@ module.exports = function(app) {
                   
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
 
-                    res.send('Finalizado com sucesso')
+                    // res.send('Finalizado com sucesso')
 
                   }
 
@@ -226,7 +223,7 @@ module.exports = function(app) {
 
                   if(ocrIndex == (reqWKS.ocr.length - 1)){
 
-                    res.send('Finalizado com sucesso')
+                    // res.send('Finalizado com sucesso')
 
                   }
 
@@ -341,6 +338,8 @@ module.exports = function(app) {
       doc: msg
     }
 
+    // Submete os dados para o EndPoint do que valida as regras
+
     var url = 'https://dokia-validation.herokuapp.com/'
 
     var requestOptions = {
@@ -365,6 +364,16 @@ module.exports = function(app) {
   })
 
   app.get('/catossinho', (req, res) => {
+
+    var resp = {
+      fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
+    }
+
+    res.send(resp)
+
+  })
+
+  app.get('/response_upload', (req, res) => {
 
     var resp = {
       fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
