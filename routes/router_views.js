@@ -101,6 +101,8 @@ module.exports = function(app) {
 
     var newFolderName = './uploads/'+originalnameRaw
 
+    res.send('1')
+    
     // Cria o diretorio para guardar o PDF
     fs.mkdir(newFolderName, function(err){
       
@@ -174,8 +176,6 @@ module.exports = function(app) {
 
 
           }
-          
-          res.send('1')
 
           // Efetua o processamento OCR das imagens
           processaOCRLote(result, 0, reqWKS, function(){
