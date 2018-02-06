@@ -10,7 +10,6 @@ var db = ''
 
 m_connectDb().then(function(dbInstance){
   db = dbInstance
-  console.log(db)
 })
 
 module.exports = function(app) {
@@ -368,7 +367,7 @@ module.exports = function(app) {
         fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
       }
 
-      db.collection('analise_ocr').insertOne(resp, function(err, res){
+      db.collection('analise_ocr').insertOne(resp, function(err, results){
 
         if(err) throw err
         console.log('1 document investor inserted')
@@ -394,11 +393,27 @@ module.exports = function(app) {
 
   app.get('/response_upload', (req, res) => {
 
-    var resp = {
-      fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
-    }
+    db.collection('analise_ocr').find().toArray(function(err, results){
 
-    res.send(resp)
+      if(err) throw err
+
+      console.log(results)
+      res.send(results)
+
+    })
+
+  })
+
+  app.get('/last_response_upload', (req, res) => {
+
+    db.collection('analise_ocr').find().sort({"_id": -1}).limit(1).toArray(function(err, results){
+
+      if(err) throw err
+
+      console.log(results)
+      res.send(results)
+
+    })
 
   })
 
