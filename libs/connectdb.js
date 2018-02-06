@@ -7,38 +7,47 @@ var dbInstance = ''
 
 module.exports = function(){
 
-	if(dbInstance == ''){
+    return new Promise((resolve, reject) => {
 
-		const MongoClient = require('mongodb').MongoClient
+        if(dbInstance == ''){
 
-		const url = process.env.MONGODB_URI ||'mongodb://heroku_7gq7kskf:h87b2kq3n2oj5ffoin790mrrf3@ds125068.mlab.com:25068/heroku_7gq7kskf'
+            const MongoClient = require('mongodb').MongoClient
 
-		const dbName = 'heroku_7gq7kskf'
+            const url = process.env.MONGODB_URI ||'mongodb://heroku_7gq7kskf:h87b2kq3n2oj5ffoin790mrrf3@ds125068.mlab.com:25068/heroku_7gq7kskf'
 
-		MongoClient.connect(url, function(err, client) {
-		
-			if(err) throw err
+            const dbName = 'heroku_7gq7kskf'
 
-			console.log("Connected successfully to MongoDb");
-		
-			const db = client.db(dbName);
+            MongoClient.connect(url, function(err, client) {
+            
+                if(err) throw err
 
-			dbInstance = db
+                console.log("Connected successfully to MongoDb");
 
-		//   client.close();
+                const db = client.db(dbName);
 
-			// TESTE
-			// const collection = db.collection('organizations')
+                dbInstance = db
 
-			// collection.find().limit(5).toArray(function(err, result){
-			// 	if(err) throw err
+                resolve(dbInstance)
 
-			// 	console.log(result)
-			// })
+            
+            //   client.close();
 
-		})
-	}
+                // TESTE
+                // const collection = db.collection('organizations')
 
-	return dbInstance
+                // collection.find().limit(5).toArray(function(err, result){
+                // 	if(err) throw err
+
+                // 	console.log(result)
+                // })
+
+            })
+        }
+        else{
+            resolve(dbInstance)
+        }
+
+
+    })
 
 }

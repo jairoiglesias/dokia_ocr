@@ -5,7 +5,13 @@ var dadosCatossinho = ''
 var dadosNLU = []
 var dadosAnalise = []
 
-var db = require('./../libs/connectdb')()
+var m_connectDb = require('./../libs/connectdb')
+var db = ''
+
+m_connectDb().then(function(dbInstance){
+  db = dbInstance
+  console.log(db)
+})
 
 module.exports = function(app) {
 
