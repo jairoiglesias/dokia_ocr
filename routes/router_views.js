@@ -5,12 +5,13 @@ var dadosCatossinho = ''
 var dadosNLU = []
 var dadosAnalise = []
 
+var db = require('./../libs/connectdb')()
+
 module.exports = function(app) {
 
   var multer = require('multer')
   var fs = require('fs')
   var rp = require('request-promise').defaults({simple : false})
-  var proc = require('child_process')
 
   var upload = multer({ dest: 'uploads/' })
 
@@ -97,12 +98,13 @@ module.exports = function(app) {
     
     var file = req.files[0].path
 
+    // Finaliza a requisicao
+    res.send('1')
+
     var newFileNameImage = './uploads/'+originalnameRaw+'/'+originalname
 
     var newFolderName = './uploads/'+originalnameRaw
 
-    res.send('1')
-    
     // Cria o diretorio para guardar o PDF
     fs.mkdir(newFolderName, function(err){
       
@@ -356,8 +358,19 @@ module.exports = function(app) {
 
       dadosAnalise.push(body)
 
-      console.log(body)
-      res.send(body)
+      var resp = {
+        fileNameUpload, dadosCatossinho, dadosNLU, dadosAnalise
+      }
+
+      db.collection('analise_ocr').insertOne(resp, function(err, res){
+
+        if(err) throw err
+        console.log('1 document investor inserted')
+        
+        console.log(body)
+        res.send(body)
+
+      })
 
     })
     
