@@ -62,6 +62,7 @@ block content
                     imagens.forEach(function(imagem, indexImagem){
 
                         var imagemPath = 'get_image/'+imagem
+                        var IndexImagemPath = imagem.split('_')[1]
 
                         html += '<div>'
                         html += '<img src="'+imagemPath+'" />'
@@ -76,27 +77,37 @@ block content
                         console.log(analise.dadosNLU[indexImagem])
                         console.log('===================================')
 
-                        if(analise.dadosNLU[indexImagem] != undefined){
+                        // Procura a analise referente a imagem
+                        analise.dadosNLU.forEach(function(nluData, nluIndex){
 
-                            analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                            var text = nluData.analyzed_text.texto
+                            var nomeImagem = text.split('||||')[0].trim()
+                            var indexImagem = nomeImagem.split('_')[1]
 
-                                var type = entity.type.split('_')[0]
+                            // Compara o indice da imagem atual com o conteudo da extracao OCR
+                            if(indexImagem == IndexImagemPath){
 
-                                if(tipoDoc.length == 0){
-                                    tipoDoc = arrTipoDoc[type]
-                                    htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
-                                }
-                                
-                                var campo = entity.type.split('_')[1]
-                                var valor = entity.text
+                                analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
 
-                                htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+                                    var type = entity.type.split('_')[0]
 
-                            })
+                                    if(tipoDoc.length == 0){
+                                        tipoDoc = arrTipoDoc[type]
+                                        htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
+                                    }
+                                    
+                                    var campo = entity.type.split('_')[1]
+                                    var valor = entity.text
 
-                            html += '<pre>'+htmlDataNLU+'</pre>'
+                                    htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
 
-                        }
+                                })
+
+                                html += '<pre>'+htmlDataNLU+'</pre>'
+
+                            }
+
+                        })
 
                         // ### Percorre os dados de Analise ###
                         

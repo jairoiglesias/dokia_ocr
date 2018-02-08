@@ -56,7 +56,6 @@ module.exports = function(app) {
 
     fs.readdir('./ajax/output', (err, items) => {
       res.send(items)
-
     })
 
   })
