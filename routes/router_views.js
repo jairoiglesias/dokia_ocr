@@ -168,10 +168,9 @@ module.exports = function(app) {
                 console.log('Extração de dados da imagem realizada com sucesso')
                 console.log(index)
 
-                reqWKS.ocr.push({
-                  originalnameRawNumber,
-                  ocrData
-                })
+                var _ocrData = '[['+originalnameRawNumber+']]' + ocrData
+                
+                reqWKS.ocr.push(_ocrData)
 
                 if(index == (result.message.length - 1)){
                   callback()
