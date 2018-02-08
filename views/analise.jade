@@ -80,15 +80,16 @@ block content
                         // Procura a analise referente a imagem
                         analise.dadosNLU.forEach(function(nluData, nluIndex){
 
-
                             console.log(nluData)
-                            console.log(text)
+                            console.log(nluData.analyzed_text)
+                            console.log(typeof nluData.analyzed_text)
                             console.log('============================')
 
                             var text = nluData.analyzed_text.texto
-                            var nomeImagem = text.split('||||')[0].trim()
-                            var indexImagem = nomeImagem.split('_')[1]
                             
+                            //- var nomeImagem = text.split('||||')[0].trim()
+                            //- var indexImagem = nomeImagem.split('_')[1]
+
                             //- // Compara o indice da imagem atual com o conteudo da extracao OCR
                             //- if(indexImagem == IndexImagemPath){
 
