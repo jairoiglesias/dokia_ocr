@@ -154,6 +154,7 @@ module.exports = function(app) {
 
               console.log(ocrData)
 
+              var originalnameRawNumber = originalnameRaw+'_' + (index + 1)
               var newFileNameText = './uploads/'+originalnameRaw+'/'+originalnameRaw+'_' + (index + 1) + '.txt'
 
               // ocrData = ocrData.replace(String.fromCharCode(10), '').replace(String.fromCharCode(13), '')
@@ -167,7 +168,10 @@ module.exports = function(app) {
                 console.log('Extração de dados da imagem realizada com sucesso')
                 console.log(index)
 
-                reqWKS.ocr.push(ocrData)
+                reqWKS.ocr.push({
+                  originalnameRawNumber,
+                  ocrData
+                })
 
                 if(index == (result.message.length - 1)){
                   callback()
@@ -381,6 +385,7 @@ module.exports = function(app) {
     
   })
 
+  
   app.get('/catossinho', (req, res) => {
 
     var resp = {
@@ -390,6 +395,7 @@ module.exports = function(app) {
     res.send(resp)
 
   })
+
 
   app.get('/response_upload', (req, res) => {
 
@@ -404,6 +410,7 @@ module.exports = function(app) {
 
   })
 
+  // Devolve o ultimo processamento de PDF
   app.get('/last_response_upload', (req, res) => {
 
     db.collection('analise_ocr').find().sort({"_id": -1}).limit(1).toArray(function(err, results){
