@@ -80,38 +80,38 @@ block content
                         // Procura a analise referente a imagem
                         analise.dadosNLU.forEach(function(nluData, nluIndex){
 
-                            console.log(nluData)
-                            console.log(nluData.analyzed_text)
-                            console.log(typeof nluData.analyzed_text)
-                            console.log('============================')
+                            //- console.log(nluData)
+                            //- console.log(nluData.analyzed_text)
+                            //- console.log(typeof nluData.analyzed_text)
+                            //- console.log('============================')
 
-                            var text = nluData.analyzed_text.texto
-                            
-                            //- var nomeImagem = text.split('||||')[0].trim()
-                            //- var indexImagem = nomeImagem.split('_')[1]
+                            var text = eval(nluData.analyzed_text).texto
 
-                            //- // Compara o indice da imagem atual com o conteudo da extracao OCR
-                            //- if(indexImagem == IndexImagemPath){
+                            var nomeImagem = text.split('||||')[0].trim()
+                            var indexImagem = nomeImagem.split('_')[1]
 
-                            //-     analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                            // Compara o indice da imagem atual com o conteudo da extracao OCR
+                            if(indexImagem == IndexImagemPath){
 
-                            //-         var type = entity.type.split('_')[0]
+                                analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
 
-                            //-         if(tipoDoc.length == 0){
-                            //-             tipoDoc = arrTipoDoc[type]
-                            //-             htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
-                            //-         }
+                                    var type = entity.type.split('_')[0]
+
+                                    if(tipoDoc.length == 0){
+                                        tipoDoc = arrTipoDoc[type]
+                                        htmlDataNLU += '<span style="font-weight:bold;font-family:Calibri">Tipo Documento: '+tipoDoc+'</span><br><br>'
+                                    }
                                     
-                            //-         var campo = entity.type.split('_')[1]
-                            //-         var valor = entity.text
+                                    var campo = entity.type.split('_')[1]
+                                    var valor = entity.text
 
-                            //-         htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
+                                    htmlDataNLU += '<span>'+campo+' : '+valor+'</span><br>'
 
-                            //-     })
+                                })
 
-                            //-     html += '<pre>'+htmlDataNLU+'</pre>'
+                                html += '<pre>'+htmlDataNLU+'</pre>'
 
-                            //- }
+                            }
 
                         })
 
