@@ -22,9 +22,8 @@ block content
         }
 
         #lista_imagens_analise pre{
-            width: 32%;
-            height: 500px;
-            float:left;
+            width: 70%;
+            height: 250px;
         }
 
     script(type="text/javascript").
@@ -93,7 +92,7 @@ block content
                                 console.log('========================')
 
                                 nluData.entities.forEach(function(entity, indexEntity){
-                                       
+
                                     var type = entity.type.split('_')[0]
 
                                     if(tipoDoc.length == 0){
