@@ -80,11 +80,12 @@ block content
                         // Procura a analise referente a imagem
                         analise.dadosNLU.forEach(function(nluData, nluIndex){
 
-                            //- console.log(nluData)
-                            //- console.log(nluData.analyzed_text)
-                            //- console.log(typeof nluData.analyzed_text)
-                            //- console.log('============================')
+                            console.log(nluData.analyzed_text)
+                            console.log(typeof nluData.analyzed_text)
+                            console.log(nluIndex)
+                            console.log('============================')
 
+                            
                             var text = eval(nluData.analyzed_text).texto
 
                             var nomeImagem = text.split('||||')[0].trim()
