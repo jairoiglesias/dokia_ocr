@@ -86,14 +86,14 @@ block content
                             console.log('============================')
 
                             
-                            var texto = JSON.parse(nluData.analyzed_text)
+                            var texto = JSON.parse(nluData.analyzed_text).texto
                             console.log(texto)
                             console.log(typeof texto)
                             console.log('****************************')
 
-                            var nomeImagem = text.split('||||')[0].trim()
+                            var nomeImagem = texto.split('||||')[0].trim()
                             var indexImagem = nomeImagem.split('_')[1]
-
+                            
                             // Compara o indice da imagem atual com o conteudo da extracao OCR
                             if(indexImagem == IndexImagemPath){
 
