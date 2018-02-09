@@ -86,7 +86,10 @@ block content
                             console.log('============================')
 
                             
-                            var text = eval(nluData.analyzed_text).texto
+                            var text = eval(nluData.analyzed_text)
+                            console.log(text)
+                            console.log(typeof text)
+                            console.log('****************************')
 
                             var nomeImagem = text.split('||||')[0].trim()
                             var indexImagem = nomeImagem.split('_')[1]
