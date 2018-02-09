@@ -85,15 +85,15 @@ block content
                             var nomeImagem = texto.split('||||')[0].trim()
                             var indexImagem = nomeImagem.split('_')[1]
 
-                            console.log(nomeImagem, indexImagem)
-                            console.log(IndexImagemPath)
-                            console.log('=============================')
-
                             // Compara o indice da imagem atual com o conteudo da extracao OCR
                             if(indexImagem == IndexImagemPath){
 
-                                analise.dadosNLU[indexImagem].entities.forEach(function(entity, indexEntity){
+                                console.log(indexImagem, IndexImagemPath)
+                                console.log(analise.dadosNLU.length)
+                                console.log('========================')
 
+                                nluData.entities.forEach(function(entity, indexEntity){
+                                       
                                     var type = entity.type.split('_')[0]
 
                                     if(tipoDoc.length == 0){
